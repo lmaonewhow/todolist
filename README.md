@@ -74,25 +74,25 @@ yarn build
 
 ### 标准卡片模式
 
-![/image/img.png](img.png)
-![/image/img_2.png](img_2.png)
+![待办任务](/image/img.png)
+![已完成任务](/image/img_2.png)
 
 ### 全屏模式
 
-![/image/img_1.png](img_1.png)
+![全屏模式](/image/img_1.png)
 
 ## 主要功能页面
 ### 专注计时器
 
-![./image/img_3.png](img_3.png)
+![专注计时器](/image/img_3.png)
 
 ### 数据统计
 
-![./image/img_4.png](img_4.png)
+![数据统计标准模式](/image/img_4.png)
 
 ### 笔记功能
 
-![./image/img_5.png](img_5.png)[待插入笔记功能页面截图]
+![笔记标准模式](/image/img_5.png)
 
 ## 贡献指南
 
