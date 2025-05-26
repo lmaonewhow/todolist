@@ -1,0 +1,69 @@
+/* 通用布局样式 */
+.app-layout {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  position: relative;
+}
+
+/* 简洁模式样式 */
+.simple-mode {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 50px;
+  padding: 0 20px;
+  background-color: #ffffff;
+  border-bottom: 1px solid #e0e0e0;
+  position: relative;
+  z-index: 10;
+}
+
+.adjacent-page {
+  color: #aaa;
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+.current-page {
+  font-size: 18px;
+  font-weight: 500;
+  color: #333;
+}
+
+.page-container {
+  display: flex;
+  flex: 1;
+  width: 500%;  /* 5个页面 */
+  height: calc(100% - 110px); /* 减去头部和指示器高度 */
+  transition: transform 0.3s ease;
+  position: relative;
+}
+
+.page {
+  flex: 0 0 20%;  /* 固定宽度，5个页面, 100% / 5 = 20% */
+  width: 20%;  /* 5个页面, 100% / 5 = 20% */
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* 标准模式样式 */
+.standard-mode {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.content-area {
+  flex: 1;
+  overflow: auto;
+  padding-bottom: 60px; /* 为底部导航栏留出空间 */
+} 

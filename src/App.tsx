@@ -1,8 +1,10 @@
-import { TodoList } from './components/TodoList'
-import './styles/todo.css'
+import React from 'react';
+import { AppLayout } from './components/AppLayout';
+import './App.css';
+import './styles/placeholders.css';
 
 function App() {
-  return <TodoList />
+  return <AppLayout />;
 }
 
-export default App
+export default App;

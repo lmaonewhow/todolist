@@ -1,0 +1,29 @@
+.page-indicator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px 0;
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 10;
+  background-color: transparent;
+}
+
+.indicator-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: #ddd;
+  margin: 0 4px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.indicator-dot.active {
+  width: 12px;
+  height: 12px;
+  background-color: #3498db;
+} 
