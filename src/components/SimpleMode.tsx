@@ -2,17 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import { TodoList } from './TodoList';
 import { PageIndicator } from './PageIndicator';
 import { Settings } from './Settings';
+import { Notes } from './Notes';
+import { Focus } from './Focus';
+import { Statistics } from './Statistics';
 import '../styles/appLayout.css';
-
-// 暂时使用空组件作为占位符
-const Statistics = () => <div className="placeholder-page">统计页面</div>;
-const Focus = () => <div className="placeholder-page">专注页面</div>;
-const Notes = () => <div className="placeholder-page">笔记页面</div>;
 
 const PAGES = [
   { id: 'todos', title: '任务', component: TodoList },
   { id: 'stats', title: '统计', component: Statistics },
-  { id: 'focus', title: '专注', component: Focus },
   { id: 'notes', title: '笔记', component: Notes },
   { id: 'settings', title: '设置', component: Settings },
 ];

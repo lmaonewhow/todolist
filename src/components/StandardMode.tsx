@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { TodoList } from './TodoList';
 import { NavigationBar } from './NavigationBar';
 import { Settings } from './Settings';
+import { Notes } from './Notes';
+import { Focus } from './Focus';
+import { Statistics } from './Statistics';
 import '../styles/appLayout.css';
-
-// 暂时使用空组件作为占位符
-const Statistics = () => <div className="placeholder-page">统计页面</div>;
-const Focus = () => <div className="placeholder-page">专注页面</div>;
-const Notes = () => <div className="placeholder-page">笔记页面</div>;
 
 const PAGES = [
   { id: 'todos', title: '任务', icon: '📝', component: TodoList },
@@ -19,19 +17,19 @@ const PAGES = [
 
 export const StandardMode: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(0);
-  
+
   const CurrentPageComponent = PAGES[currentPage].component;
-  
+
   return (
     <div className="standard-mode">
       <div className="content-area">
         <CurrentPageComponent />
       </div>
-      <NavigationBar 
+      <NavigationBar
         items={PAGES}
         currentPage={currentPage}
         onPageChange={setCurrentPage}
       />
     </div>
   );
-}; 
+};

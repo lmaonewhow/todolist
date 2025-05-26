@@ -287,24 +287,31 @@ export const TodoList: React.FC = () => {
               </div>
             ) : (
               <>
-                {completedGroups.map((group) => (
-                  <div key={group.dateStr} className="todo-group">
-                    <div className="date-divider">
-                      <span className="date-label">{group.label}</span>
-                    </div>
+                {completedGroups.map((group, groupIndex) => (
+                  <div key={groupIndex} className="todo-group">
+                    <div className="todo-group-header">{group.label}</div>
                     {group.todos.map(todo => (
-                      <div
-                        key={todo.id}
-                        className="todo-item completed"
+                      <div 
+                        key={todo.id} 
+                        className={`todo-item completed ${todo.animateOut ? 'animate-out' : ''}`}
                         onContextMenu={(e) => handleContextMenu(e, todo)}
                       >
-                        <input
-                          type="checkbox"
-                          className="todo-checkbox"
-                          checked={todo.completed}
-                          onChange={() => toggleTodo(todo.id)}
-                        />
-                        <span className="todo-content">{todo.content}</span>
+                        <div className="todo-checkbox-container" onClick={() => toggleTodo(todo.id)}>
+                          <input 
+                            type="checkbox" 
+                            checked={todo.completed} 
+                            readOnly 
+                          />
+                          <span className="custom-checkbox"></span>
+                        </div>
+                        <span className="todo-content completed">{todo.content}</span>
+                        <button 
+                          onClick={() => handleDelete(todo.id)} 
+                          className="delete-completed-btn"
+                          title="删除此任务"
+                        >
+                          ✕
+                        </button>
                       </div>
                     ))}
                   </div>

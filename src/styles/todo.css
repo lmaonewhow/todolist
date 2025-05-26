@@ -205,9 +205,41 @@ body {
   word-break: break-word;
 }
 
+.todo-item.completed {
+  background-color: #f9f9f9; /* Slightly different background for completed items */
+  border-left-color: #cccccc; /* Greyish border for completed */
+  position: relative; /* Needed for absolute positioning of the delete button */
+}
+
 .todo-item.completed .todo-content {
+  color: #888;
   text-decoration: line-through;
-  color: var(--completed-color);
+}
+
+.delete-completed-btn {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: #cccccc; /* Light grey, less prominent */
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  padding: 5px;
+  line-height: 1;
+  opacity: 0.6; /* Initially less visible */
+  transition: color 0.2s ease, opacity 0.2s ease;
+}
+
+.todo-item.completed:hover .delete-completed-btn {
+  color: #e74c3c; /* Red on hover for delete action */
+  opacity: 1; /* Fully visible on hover */
+}
+
+.delete-completed-btn:hover {
+  color: #c0392b !important; /* Darker red when button itself is hovered */
 }
 
 /* 空状态 */

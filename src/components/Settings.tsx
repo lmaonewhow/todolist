@@ -7,12 +7,10 @@ export const Settings: React.FC = () => {
 
   return (
     <div className="settings-container">
-      <h2>设置</h2>
-      
       <div className="settings-section">
         <h3>界面模式</h3>
         <div className="setting-item">
-          <div className="setting-label">界面模式选择</div>
+          <div className="setting-label">选择您喜欢的界面风格</div>
           <div className="mode-selector">
             <div 
               className={`mode-option ${uiMode === 'standard' ? 'active' : ''}`}
@@ -36,10 +34,37 @@ export const Settings: React.FC = () => {
       </div>
       
       <div className="settings-section">
-        <h3>关于</h3>
+        <h3>主题设置</h3>
         <div className="setting-item">
-          <div className="setting-label">版本</div>
-          <div className="setting-value">1.0.0</div>
+          <div className="setting-label">应用主题</div>
+          <div className="theme-selector">
+            <div className="theme-option active">
+              <div className="theme-color" style={{backgroundColor: '#3498db'}}></div>
+              <div className="theme-name">默认蓝</div>
+            </div>
+            <div className="theme-option">
+              <div className="theme-color" style={{backgroundColor: '#2ecc71'}}></div>
+              <div className="theme-name">清新绿</div>
+            </div>
+            <div className="theme-option">
+              <div className="theme-color" style={{backgroundColor: '#9b59b6'}}></div>
+              <div className="theme-name">优雅紫</div>
+            </div>
+            <div className="theme-option">
+              <div className="theme-color" style={{backgroundColor: '#e74c3c'}}></div>
+              <div className="theme-name">活力红</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      <div className="settings-section">
+        <h3>关于</h3>
+        <div className="setting-item about-item">
+          <div className="app-logo">📝</div>
+          <div className="app-title">Todo清单</div>
+          <div className="app-version">版本 1.0.0</div>
+          <div className="app-copyright">© 2023 Todo清单团队</div>
         </div>
       </div>
     </div>
