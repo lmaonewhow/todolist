@@ -4,61 +4,58 @@ import { FocusHistory } from './FocusHistory';
 import '../styles/focus.css';
 
 export const Focus: React.FC = () => {
-  const { addFocusRecord } = useFocusStore();
+  const { startFocus, pauseFocus, resetFocus, completeFocus, status, timeLeft } = useFocusStore();
   const [task, setTask] = useState('');
-  const [timeLeft, setTimeLeft] = useState(25 * 60); // 25分钟
-  const [isActive, setIsActive] = useState(false);
-  const [isPaused, setIsPaused] = useState(false);
 
-  useEffect(() => {
-    let timer: NodeJS.Timeout;
-    if (isActive && !isPaused && timeLeft > 0) {
-      timer = setInterval(() => {
-        setTimeLeft(time => time - 1);
-      }, 1000);
-    } else if (timeLeft === 0) {
-      handleComplete();
-    }
-    return () => clearInterval(timer);
-  }, [isActive, isPaused, timeLeft]);
-
+  // 格式化时间显示
   const formatTime = (seconds: number): string => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
     return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
   };
 
+  // 设置计时器来更新focusStore中的timeLeft
+  useEffect(() => {
+    let timer: NodeJS.Timeout;
+    
+    if (status === 'running') {
+      timer = setInterval(() => {
+        if (timeLeft <= 0) {
+          completeFocus();
+          setTask('');
+        }
+      }, 1000);
+    }
+    
+    return () => clearInterval(timer);
+  }, [status, timeLeft, completeFocus]);
+
+  // 处理开始专注
   const handleStart = () => {
     if (!task.trim()) {
       alert('请输入专注任务');
       return;
     }
-    setIsActive(true);
-    setIsPaused(false);
+    startFocus(task.trim());
   };
 
+  // 处理暂停/继续
   const handlePause = () => {
-    setIsPaused(!isPaused);
-  };
-
-  const handleReset = () => {
-    setIsActive(false);
-    setIsPaused(false);
-    setTimeLeft(25 * 60);
-  };
-
-  const handleComplete = () => {
-    if (task.trim()) {
-      addFocusRecord({
-        task: task.trim(),
-        duration: 25,
-        completedAt: new Date().toISOString(),
-      });
+    if (status === 'running') {
+      pauseFocus();
+    } else if (status === 'paused') {
+      startFocus(task);
     }
-    setIsActive(false);
-    setTask('');
-    setTimeLeft(25 * 60);
   };
+
+  // 处理重置
+  const handleReset = () => {
+    resetFocus();
+  };
+
+  // 判断是否正在进行专注
+  const isActive = status === 'running' || status === 'paused';
+  const isPaused = status === 'paused';
 
   return (
     <div className="focus-page">

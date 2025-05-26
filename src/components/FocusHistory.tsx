@@ -3,10 +3,10 @@ import { useFocusStore } from '../store/focusStore';
 import '../styles/focus-history.css';
 
 export const FocusHistory: React.FC = () => {
-  const { records, clearRecords } = useFocusStore();
+  const { focusHistory } = useFocusStore();
 
-  const formatDate = (dateString: string) => {
-    const date = new Date(dateString);
+  const formatDate = (timestamp: number) => {
+    const date = new Date(timestamp);
     return date.toLocaleString('zh-CN', {
       month: 'long',
       day: 'numeric',
@@ -15,7 +15,7 @@ export const FocusHistory: React.FC = () => {
     });
   };
 
-  if (records.length === 0) {
+  if (!focusHistory || focusHistory.length === 0) {
     return (
       <div className="focus-history empty">
         <p>还没有专注记录，开始你的第一次专注吧！</p>
@@ -27,19 +27,16 @@ export const FocusHistory: React.FC = () => {
     <div className="focus-history">
       <div className="history-header">
         <h2>专注记录</h2>
-        <button className="clear-btn" onClick={clearRecords}>
-          清空记录
-        </button>
       </div>
       <div className="history-list">
-        {records.map((record) => (
-          <div key={record.id} className="history-item">
+        {focusHistory.map((session, index) => (
+          <div key={index} className="history-item">
             <div className="history-task">
-              <span className="task-name">{record.task}</span>
-              <span className="task-duration">{record.duration} 分钟</span>
+              <span className="task-name">{session.task || '未命名任务'}</span>
+              <span className="task-duration">{Math.round(session.duration / 60000)} 分钟</span>
             </div>
             <div className="history-time">
-              {formatDate(record.completedAt)}
+              {formatDate(session.startTime)}
             </div>
           </div>
         ))}

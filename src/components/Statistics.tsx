@@ -4,24 +4,41 @@ import { useTodoStore } from '../store/todoStore';
 import '../styles/statistics.css';
 
 export const Statistics: React.FC = () => {
-  const { records } = useFocusStore();
+  const { focusHistory } = useFocusStore();
   const { todos } = useTodoStore();
 
   // 计算专注统计数据
   const focusStats = useMemo(() => {
-    const totalMinutes = records.reduce((sum, record) => sum + record.duration, 0);
-    const totalSessions = records.length;
+    if (!focusHistory || focusHistory.length === 0) {
+      return {
+        totalMinutes: 0,
+        totalSessions: 0,
+        weeklyData: Array.from({ length: 7 }, (_, i) => {
+          const date = new Date();
+          date.setDate(date.getDate() - i);
+          return {
+            date: date.toLocaleDateString(),
+            minutes: 0,
+            sessions: 0
+          };
+        }).reverse()
+      };
+    }
+    
+    // 将持续时间从毫秒转换为分钟
+    const totalMinutes = Math.round(focusHistory.reduce((sum, session) => sum + session.duration / 60000, 0));
+    const totalSessions = focusHistory.length;
     
     // 按日期分组统计
-    const dailyStats = records.reduce((acc, record) => {
-      const date = new Date(record.completedAt).toLocaleDateString();
+    const dailyStats = focusHistory.reduce((acc, session) => {
+      const date = new Date(session.startTime).toLocaleDateString();
       if (!acc[date]) {
         acc[date] = {
           minutes: 0,
           sessions: 0,
         };
       }
-      acc[date].minutes += record.duration;
+      acc[date].minutes += Math.round(session.duration / 60000); // 毫秒转换为分钟
       acc[date].sessions += 1;
       return acc;
     }, {} as Record<string, { minutes: number; sessions: number }>);
@@ -44,7 +61,7 @@ export const Statistics: React.FC = () => {
       totalSessions,
       weeklyData,
     };
-  }, [records]);
+  }, [focusHistory]);
 
   // 计算任务统计数据
   const todoStats = useMemo(() => {

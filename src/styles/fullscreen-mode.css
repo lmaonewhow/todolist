@@ -1,0 +1,1321 @@
+/* === 全屏模式基础样式 === */
+:root {
+  --fs-primary: #4A90E2;
+  --fs-primary-light: #61A1E6;
+  --fs-primary-dark: #3A80D2;
+  --fs-accent: #FF6B6B;
+  --fs-text: #2D3748;
+  --fs-text-light: #718096;
+  --fs-bg: #F7FAFC;
+  --fs-card: #FFFFFF;
+  --fs-border: #E2E8F0;
+  --fs-green: #48BB78;
+  --fs-yellow: #F6E05E;
+  --fs-purple: #9F7AEA;
+  --fs-sidebar-width: 280px;
+  --fs-header-height: 70px;
+  --fs-transition: 0.3s ease;
+  --fs-shadow-sm: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.05);
+  --fs-shadow: 0 4px 6px rgba(0,0,0,0.1), 0 1px 3px rgba(0,0,0,0.08);
+  --fs-shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.1), 0 4px 6px -2px rgba(0,0,0,0.05);
+}
+
+/* === 全局布局 === */
+.fullscreen-container {
+  display: grid;
+  grid-template-columns: var(--fs-sidebar-width) 1fr;
+  min-height: 100vh;
+  background-color: var(--fs-bg);
+}
+
+/* === 侧边栏 === */
+.fs-sidebar {
+  background: var(--fs-card);
+  box-shadow: var(--fs-shadow);
+  padding: 30px 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+  z-index: 100;
+  transform: translateX(0);
+  transition: transform var(--fs-transition);
+}
+
+.fs-sidebar.collapsed {
+  transform: translateX(-100%);
+}
+
+.fs-logo {
+  margin: 0 30px 30px;
+  text-align: center;
+}
+
+.fs-logo img {
+  height: 40px;
+}
+
+.fs-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 0 15px;
+}
+
+.fs-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 15px;
+  border-radius: 10px;
+  color: var(--fs-text);
+  text-decoration: none;
+  transition: all var(--fs-transition);
+  cursor: pointer;
+}
+
+.fs-nav-item:hover {
+  background-color: rgba(74, 144, 226, 0.08);
+  color: var(--fs-primary);
+}
+
+.fs-nav-item.active {
+  background-color: rgba(74, 144, 226, 0.12);
+  color: var(--fs-primary);
+  font-weight: 500;
+}
+
+.fs-nav-icon {
+  font-size: 20px;
+  width: 24px;
+  text-align: center;
+}
+
+.fs-nav-text {
+  font-size: 15px;
+}
+
+.fs-nav-count {
+  margin-left: auto;
+  background-color: var(--fs-primary-light);
+  color: white;
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+/* === 主内容区 === */
+.fs-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.fs-header {
+  height: var(--fs-header-height);
+  padding: 0 30px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--fs-card);
+  box-shadow: var(--fs-shadow-sm);
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.fs-header-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.fs-menu-toggle {
+  display: none; /* 在大屏幕上隐藏 */
+  background: transparent;
+  border: none;
+  font-size: 24px;
+  color: var(--fs-text);
+  cursor: pointer;
+}
+
+.fs-header-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: var(--fs-text);
+}
+
+.fs-header-right {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.fs-search {
+  display: flex;
+  align-items: center;
+  background-color: var(--fs-bg);
+  border-radius: 8px;
+  padding: 8px 15px;
+  width: 300px;
+  transition: all var(--fs-transition);
+}
+
+.fs-search:focus-within {
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.2);
+}
+
+.fs-search-icon {
+  color: var(--fs-text-light);
+  margin-right: 10px;
+}
+
+.fs-search-input {
+  border: none;
+  background: transparent;
+  flex-grow: 1;
+  color: var(--fs-text);
+  font-size: 14px;
+}
+
+.fs-search-input:focus {
+  outline: none;
+}
+
+.fs-user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 8px;
+  border-radius: 8px;
+  transition: background-color var(--fs-transition);
+}
+
+.fs-user:hover {
+  background-color: var(--fs-bg);
+}
+
+.fs-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background-color: var(--fs-primary-light);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.fs-user-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fs-text);
+}
+
+/* === 内容区 === */
+.fs-content {
+  flex-grow: 1;
+  padding: 30px;
+  overflow-y: auto;
+}
+
+/* === 卡片通用样式 === */
+.fs-card {
+  background-color: var(--fs-card);
+  border-radius: 12px;
+  box-shadow: var(--fs-shadow);
+  padding: 25px;
+  margin-bottom: 25px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fs-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--fs-shadow-lg);
+}
+
+.fs-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.fs-card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fs-text);
+}
+
+.fs-card-actions {
+  display: flex;
+  gap: 10px;
+}
+
+/* === 待办任务全屏样式 === */
+.fs-todos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 25px;
+}
+
+.fs-todo-column {
+  background-color: var(--fs-bg);
+  border-radius: 12px;
+  padding: 20px;
+  height: calc(100vh - var(--fs-header-height) - 120px);
+  overflow-y: auto;
+}
+
+.fs-todo-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.fs-todo-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fs-text);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.fs-todo-count {
+  background-color: rgba(0, 0, 0, 0.08);
+  color: var(--fs-text);
+  font-size: 12px;
+  padding: 2px 8px;
+  border-radius: 10px;
+}
+
+.fs-add-todo {
+  display: flex;
+  background-color: var(--fs-card);
+  border-radius: 8px;
+  margin-bottom: 15px;
+  overflow: hidden;
+  box-shadow: var(--fs-shadow-sm);
+  transition: all var(--fs-transition);
+}
+
+.fs-add-todo:focus-within {
+  box-shadow: 0 0 0 2px rgba(74, 144, 226, 0.3);
+}
+
+.fs-add-todo-input {
+  border: none;
+  padding: 12px 15px;
+  flex-grow: 1;
+  font-size: 14px;
+}
+
+.fs-add-todo-input:focus {
+  outline: none;
+}
+
+.fs-add-todo-btn {
+  background-color: var(--fs-primary);
+  color: white;
+  border: none;
+  padding: 0 15px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color var(--fs-transition);
+}
+
+.fs-add-todo-btn:hover {
+  background-color: var(--fs-primary-dark);
+}
+
+.fs-todo-item {
+  background-color: var(--fs-card);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  box-shadow: var(--fs-shadow-sm);
+  animation: fadeIn 0.3s ease;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.fs-todo-item:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--fs-shadow);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fs-todo-checkbox {
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid var(--fs-primary);
+  outline: none;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.fs-todo-checkbox:checked {
+  background-color: var(--fs-primary);
+  border-color: var(--fs-primary);
+}
+
+.fs-todo-checkbox:checked::after {
+  content: "✓";
+  position: absolute;
+  font-size: 12px;
+  color: white;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.fs-todo-content {
+  flex-grow: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--fs-text);
+}
+
+.fs-todo-actions {
+  display: flex;
+  gap: 8px;
+  opacity: 0;
+  transition: opacity var(--fs-transition);
+}
+
+.fs-todo-item:hover .fs-todo-actions {
+  opacity: 1;
+}
+
+.fs-todo-btn {
+  background: transparent;
+  border: none;
+  color: var(--fs-text-light);
+  cursor: pointer;
+  font-size: 18px;
+  padding: 2px;
+  transition: color var(--fs-transition);
+}
+
+.fs-todo-btn:hover {
+  color: var(--fs-accent);
+}
+
+.fs-todo-item.completed .fs-todo-content {
+  text-decoration: line-through;
+  color: var(--fs-text-light);
+}
+
+.fs-todo-date {
+  font-size: 12px;
+  color: var(--fs-text-light);
+  margin-top: 5px;
+}
+
+/* === 专注页面全屏样式 === */
+.fs-focus {
+  display: grid;
+  grid-template-columns: 1fr 350px;
+  gap: 30px;
+  height: calc(100vh - var(--fs-header-height) - 60px);
+}
+
+.fs-focus-timer-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: var(--fs-card);
+  border-radius: 20px;
+  box-shadow: var(--fs-shadow-lg);
+  padding: 40px;
+  height: 100%;
+}
+
+.fs-timer-circle {
+  position: relative;
+  width: 300px;
+  height: 300px;
+  margin: 30px 0;
+}
+
+.fs-timer-bg {
+  fill: none;
+  stroke: rgba(74, 144, 226, 0.2);
+  stroke-width: 12;
+}
+
+.fs-timer-progress {
+  fill: none;
+  stroke: var(--fs-primary);
+  stroke-width: 12;
+  stroke-linecap: round;
+  transform: rotate(-90deg);
+  transform-origin: center;
+  transition: stroke-dashoffset 1s linear;
+}
+
+.fs-timer-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 48px;
+  font-weight: 200;
+  color: var(--fs-text);
+}
+
+.fs-focus-input {
+  width: 100%;
+  padding: 15px;
+  border: 2px solid var(--fs-border);
+  border-radius: 10px;
+  font-size: 16px;
+  margin: 20px 0;
+  transition: all var(--fs-transition);
+}
+
+.fs-focus-input:focus {
+  outline: none;
+  border-color: var(--fs-primary);
+  box-shadow: 0 0 0 3px rgba(74, 144, 226, 0.2);
+}
+
+.fs-focus-actions {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.fs-focus-btn {
+  min-width: 120px;
+  padding: 12px 25px;
+  border-radius: 30px;
+  border: none;
+  font-size: 16px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--fs-transition);
+}
+
+.fs-focus-start-btn {
+  background-color: var(--fs-primary);
+  color: white;
+  box-shadow: 0 4px 10px rgba(74, 144, 226, 0.3);
+}
+
+.fs-focus-start-btn:hover {
+  background-color: var(--fs-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(74, 144, 226, 0.4);
+}
+
+.fs-focus-control-btn {
+  background-color: var(--fs-bg);
+  color: var(--fs-text);
+}
+
+.fs-focus-control-btn:hover {
+  background-color: var(--fs-border);
+}
+
+.fs-focus-records {
+  background-color: var(--fs-card);
+  border-radius: 20px;
+  box-shadow: var(--fs-shadow);
+  padding: 25px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+.fs-focus-records-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid var(--fs-border);
+}
+
+.fs-focus-records-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--fs-text);
+}
+
+.fs-focus-record {
+  padding: 15px;
+  background-color: var(--fs-bg);
+  border-radius: 10px;
+  margin-bottom: 15px;
+  transition: transform var(--fs-transition);
+  cursor: pointer;
+}
+
+.fs-focus-record:hover {
+  transform: translateX(5px);
+}
+
+.fs-focus-record-task {
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--fs-text);
+  margin-bottom: 8px;
+}
+
+.fs-focus-record-info {
+  display: flex;
+  justify-content: space-between;
+  font-size: 13px;
+  color: var(--fs-text-light);
+}
+
+.fs-focus-tips {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.fs-focus-tips-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--fs-text);
+  margin-bottom: 10px;
+}
+
+.fs-focus-tips-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fs-focus-tips-item {
+  padding: 8px 0;
+  border-bottom: 1px dashed var(--fs-border);
+  font-size: 14px;
+  color: var(--fs-text);
+  display: flex;
+  align-items: center;
+}
+
+.fs-focus-tips-item:before {
+  content: "•";
+  color: var(--fs-primary);
+  font-size: 20px;
+  margin-right: 10px;
+}
+
+/* === 统计页面全屏样式 === */
+.fs-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+.fs-stat-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.fs-stat-card-body {
+  flex-grow: 1;
+}
+
+.fs-stat-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+  margin-bottom: 25px;
+}
+
+.fs-stat-number {
+  background: linear-gradient(135deg, var(--fs-bg), #FFFFFF);
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: var(--fs-shadow-sm);
+}
+
+.fs-stat-value {
+  font-size: 32px;
+  font-weight: 600;
+  color: var(--fs-primary);
+  margin-bottom: 5px;
+}
+
+.fs-stat-label {
+  font-size: 14px;
+  color: var(--fs-text-light);
+}
+
+.fs-chart-container {
+  margin-top: 20px;
+  height: 300px;
+  position: relative;
+}
+
+.fs-bar-chart {
+  display: flex;
+  align-items: flex-end;
+  height: 250px;
+  gap: 15px;
+  padding: 20px 0;
+}
+
+.fs-bar-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.fs-bar-wrap {
+  width: 40px;
+  height: 200px;
+  display: flex;
+  align-items: flex-end;
+}
+
+.fs-bar {
+  width: 100%;
+  background: linear-gradient(180deg, var(--fs-primary), var(--fs-primary-light));
+  border-radius: 5px;
+  transition: height 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.fs-bar:hover::before {
+  content: attr(data-value);
+  position: absolute;
+  top: -35px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: var(--fs-text);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.fs-bar:hover::after {
+  content: "";
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 5px solid var(--fs-text);
+}
+
+.fs-bar-label {
+  font-size: 12px;
+  color: var(--fs-text-light);
+}
+
+.fs-progress-container {
+  margin-top: 20px;
+}
+
+.fs-progress {
+  height: 8px;
+  background-color: var(--fs-bg);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.fs-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--fs-primary), var(--fs-primary-light));
+  border-radius: 4px;
+  transition: width 0.5s ease;
+}
+
+.fs-progress-labels {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: var(--fs-text-light);
+}
+
+/* === 笔记页面全屏样式 === */
+.fs-notes {
+  max-width: 100%;
+}
+
+.fs-notes-container {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 30px;
+  height: calc(100vh - var(--fs-header-height) - 60px);
+}
+
+.fs-notes-sidebar {
+  background-color: var(--fs-card);
+  border-radius: 15px;
+  box-shadow: var(--fs-shadow);
+  overflow-y: auto;
+  height: 100%;
+}
+
+.fs-notes-search {
+  padding: 15px;
+}
+
+.fs-notes-create-btn {
+  display: block;
+  width: calc(100% - 30px);
+  margin: 0 15px 15px;
+  padding: 12px;
+  background-color: var(--fs-primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all var(--fs-transition);
+}
+
+.fs-notes-create-btn:hover {
+  background-color: var(--fs-primary-dark);
+}
+
+.fs-notes-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.fs-note-item {
+  padding: 15px;
+  cursor: pointer;
+  transition: all var(--fs-transition);
+  border-left: 3px solid transparent;
+}
+
+.fs-note-item:hover {
+  background-color: rgba(74, 144, 226, 0.08);
+}
+
+.fs-note-item.active {
+  background-color: rgba(74, 144, 226, 0.12);
+  border-left-color: var(--fs-primary);
+}
+
+.fs-note-item-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--fs-text);
+  margin-bottom: 5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fs-note-item-excerpt {
+  font-size: 13px;
+  color: var(--fs-text-light);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.fs-note-item-date {
+  font-size: 11px;
+  color: var(--fs-text-light);
+  margin-top: 5px;
+}
+
+.fs-note-editor {
+  background-color: var(--fs-card);
+  border-radius: 15px;
+  box-shadow: var(--fs-shadow);
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.fs-note-editor-header {
+  padding: 15px 20px;
+  border-bottom: 1px solid var(--fs-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.fs-editor-title-input {
+  border: none;
+  font-size: 18px;
+  font-weight: 500;
+  color: var(--fs-text);
+  width: 100%;
+  background: transparent;
+}
+
+.fs-editor-title-input:focus {
+  outline: none;
+}
+
+.fs-note-actions {
+  display: flex;
+  gap: 10px;
+}
+
+.fs-note-action-btn {
+  background: transparent;
+  border: none;
+  color: var(--fs-text-light);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 5px;
+  transition: color var(--fs-transition);
+}
+
+.fs-note-action-btn:hover {
+  color: var(--fs-primary);
+}
+
+.fs-editor-tabs {
+  display: flex;
+  padding: 0 20px;
+  border-bottom: 1px solid var(--fs-border);
+}
+
+.fs-editor-tab {
+  padding: 12px 20px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--fs-text-light);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all var(--fs-transition);
+}
+
+.fs-editor-tab:hover {
+  color: var(--fs-primary);
+}
+
+.fs-editor-tab.active {
+  color: var(--fs-primary);
+  border-bottom-color: var(--fs-primary);
+}
+
+.fs-editor-content {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.fs-editor-textarea {
+  width: 100%;
+  height: 100%;
+  border: none;
+  resize: none;
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--fs-text);
+  background: transparent;
+}
+
+.fs-editor-textarea:focus {
+  outline: none;
+}
+
+/* === 响应式设计 === */
+@media (max-width: 1200px) {
+  .fs-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 992px) {
+  .fullscreen-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .fs-sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    z-index: 200;
+    transform: translateX(-100%);
+  }
+  
+  .fs-sidebar.open {
+    transform: translateX(0);
+  }
+  
+  .fs-menu-toggle {
+    display: block;
+  }
+  
+  .fs-focus {
+    grid-template-columns: 1fr;
+  }
+  
+  .fs-notes-container {
+    grid-template-columns: 1fr;
+  }
+  
+  .fs-notes-sidebar {
+    display: none;
+  }
+  
+  .fs-notes-sidebar.open {
+    display: block;
+    position: fixed;
+    left: 0;
+    top: var(--fs-header-height);
+    width: 300px;
+    height: calc(100vh - var(--fs-header-height));
+    z-index: 100;
+  }
+}
+
+@media (max-width: 768px) {
+  .fs-header {
+    padding: 0 15px;
+  }
+  
+  .fs-content {
+    padding: 15px;
+  }
+  
+  .fs-search {
+    width: 200px;
+  }
+  
+  .fs-user-name {
+    display: none;
+  }
+  
+  .fs-timer-circle {
+    width: 200px;
+    height: 200px;
+  }
+  
+  .fs-timer-text {
+    font-size: 36px;
+  }
+}
+
+/* 笔记编辑器空状态 */
+.fs-note-editor-empty {
+  background-color: var(--fs-card);
+  border-radius: 15px;
+  box-shadow: var(--fs-shadow);
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.fs-note-empty-message {
+  padding: 30px;
+  max-width: 400px;
+}
+
+.fs-note-empty-message h3 {
+  font-size: 20px;
+  margin-bottom: 10px;
+  color: var(--fs-text);
+}
+
+.fs-note-empty-message p {
+  color: var(--fs-text-light);
+  margin-bottom: 20px;
+}
+
+/* 设置内容样式 */
+.fs-settings-content {
+  line-height: 1.6;
+}
+
+.fs-settings-content p {
+  margin-bottom: 15px;
+}
+
+.fs-settings-content ul {
+  margin-left: 20px;
+  margin-bottom: 15px;
+}
+
+/* 设置页面样式 */
+.fs-settings-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+}
+
+.fs-settings-card {
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  overflow: hidden;
+  height: fit-content;
+}
+
+.fs-card-header {
+  padding: 1.2rem 1.5rem;
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #edf2f9;
+}
+
+.fs-card-title {
+  margin: 0;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #41506b;
+}
+
+.fs-settings-content {
+  padding: 1.5rem;
+}
+
+.fs-settings-section {
+  margin-bottom: 1.5rem;
+}
+
+.fs-settings-section-title {
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-top: 0;
+  margin-bottom: 1rem;
+  color: #41506b;
+}
+
+.fs-settings-description {
+  color: #656f7d;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin-bottom: 1.2rem;
+}
+
+.fs-settings-options {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.fs-settings-option-card {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 1rem;
+  text-align: center;
+  flex: 1;
+  min-width: 100px;
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.fs-settings-option-card.active {
+  border-color: #4a6cf7;
+  background-color: rgba(74, 108, 247, 0.1);
+}
+
+.fs-settings-option-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.fs-settings-option-icon {
+  font-size: 1.8rem;
+  margin-bottom: 0.5rem;
+}
+
+.fs-settings-option-label {
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+  color: #41506b;
+}
+
+.fs-settings-option-info {
+  font-size: 0.8rem;
+  color: #8896ab;
+}
+
+.fs-settings-input-group,
+.fs-settings-toggle-group,
+.fs-settings-select-group {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.fs-settings-input-group label,
+.fs-settings-toggle-group label,
+.fs-settings-select-group label {
+  font-size: 0.95rem;
+  color: #41506b;
+}
+
+.fs-settings-input,
+.fs-settings-select {
+  width: 120px;
+  padding: 0.5rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  background-color: white;
+}
+
+.fs-toggle-switch {
+  position: relative;
+  display: inline-block;
+  width: 48px;
+  height: 24px;
+}
+
+.fs-toggle-switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.fs-toggle-slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #e2e8f0;
+  transition: .4s;
+  border-radius: 24px;
+}
+
+.fs-toggle-slider:before {
+  position: absolute;
+  content: "";
+  height: 18px;
+  width: 18px;
+  left: 3px;
+  bottom: 3px;
+  background-color: white;
+  transition: .4s;
+  border-radius: 50%;
+}
+
+input:checked + .fs-toggle-slider {
+  background-color: #4a6cf7;
+}
+
+input:checked + .fs-toggle-slider:before {
+  transform: translateX(24px);
+}
+
+.fs-settings-button-group {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.fs-settings-button {
+  padding: 0.6rem 1rem;
+  background-color: #f8f9fa;
+  border: 1px solid #e2e8f0;
+  border-radius: 4px;
+  color: #41506b;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.fs-settings-button:hover {
+  background-color: #edf2f9;
+}
+
+.fs-settings-button.danger {
+  border-color: #ff5a5f;
+  color: #ff5a5f;
+}
+
+.fs-settings-button.danger:hover {
+  background-color: rgba(255, 90, 95, 0.1);
+}
+
+.fs-settings-btn-icon {
+  margin-right: 0.5rem;
+}
+
+.fs-settings-about {
+  text-align: center;
+  padding: 1rem 0;
+}
+
+.fs-app-logo {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #4a6cf7;
+  margin-bottom: 0.5rem;
+}
+
+.fs-app-version {
+  color: #8896ab;
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.fs-app-description {
+  color: #656f7d;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.fs-app-links {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+}
+
+.fs-app-link {
+  color: #4a6cf7;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.fs-app-link:hover {
+  text-decoration: underline;
+} 
