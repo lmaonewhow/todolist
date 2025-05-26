@@ -1,0 +1,360 @@
+/* 全局样式 */
+:root {
+  --bg-color: #fffde7;
+  --text-color: #2c3e50;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --hover-color: rgba(0, 0, 0, 0.05);
+  --item-bg-color: #ffffff;
+  --item-hover-bg-color: #f5f5f5;
+  --primary-color: #4caf50;
+  --primary-dark: #43a047;
+  --completed-color: #9e9e9e;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  background: var(--bg-color);
+  color: var(--text-color);
+  user-select: none; /* 防止文本选择 */
+}
+
+/* 应用容器 */
+.app {
+  height: 100vh;
+  width: 300px;
+  background: var(--bg-color);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  position: relative; /* 添加相对定位 */
+}
+
+/* 标题栏样式增强 */
+.title-bar {
+  -webkit-app-region: drag !important; /* 强制可拖动 */
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-bottom: 1px solid var(--border-color);
+  background: var(--item-bg-color);
+  user-select: none; /* 防止文本选择 */
+  touch-action: none; /* 禁止触摸操作 */
+  z-index: 10; /* 确保在最上层 */
+  padding: 0;
+}
+
+/* 标签页样式 */
+.tabs {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  -webkit-app-region: drag;
+}
+
+.tab {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-color);
+  opacity: 0.7;
+  transition: all 0.3s;
+  cursor: pointer;
+  -webkit-app-region: no-drag; /* 标签可点击 */
+  position: relative;
+}
+
+.tab.active {
+  opacity: 1;
+  color: var(--primary-color);
+}
+
+/* 活动标签底部指示器 */
+.tab.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 25%;
+  width: 50%;
+  height: 3px;
+  background: var(--primary-color);
+  border-radius: 3px 3px 0 0;
+}
+
+/* 滑动容器 */
+.sliding-container {
+  display: flex;
+  width: 600px; /* 两个页面的宽度 */
+  height: calc(100vh - 80px); /* 减去标题栏和统计栏的高度 */
+  transition: transform 0.3s ease;
+  overflow: hidden;
+}
+
+/* 提供更大的拖动区域 */
+.app::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 40px;
+  -webkit-app-region: drag;
+  z-index: 9;
+  pointer-events: none;
+}
+
+/* 主内容区 */
+.todo-container {
+  flex: 0 0 300px; /* 固定宽度 */
+  overflow-y: auto;
+  padding: 1rem;
+  box-sizing: border-box;
+  background: var(--bg-color);
+  -webkit-app-region: no-drag; /* 确保内容区不可拖动 */
+}
+
+/* 已完成任务标题 */
+.completed-title {
+  margin: 0 0 1rem;
+  font-size: 16px;
+  color: var(--completed-color);
+  text-align: center;
+}
+
+/* 添加任务表单 */
+.add-todo {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 1rem;
+  -webkit-app-region: no-drag;
+}
+
+.add-todo-input {
+  flex: 1;
+  padding: 8px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--item-bg-color);
+  transition: all 0.2s;
+}
+
+.add-todo-input:focus {
+  outline: none;
+  border-color: rgba(0, 0, 0, 0.2);
+  background: var(--item-bg-color);
+}
+
+.add-todo-button {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background: var(--primary-color);
+  color: white;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-weight: 500;
+}
+
+.add-todo-button:hover {
+  background: var(--primary-dark);
+}
+
+/* 任务列表 */
+.todo-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* 任务项 */
+.todo-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px;
+  background: var(--item-bg-color);
+  border-radius: 6px;
+  transition: all 0.2s;
+  border: 1px solid var(--border-color);
+  -webkit-app-region: no-drag;
+}
+
+.todo-item:hover {
+  background: var(--item-hover-bg-color);
+}
+
+.todo-checkbox {
+  width: 16px;
+  height: 16px;
+  cursor: pointer;
+}
+
+.todo-content {
+  flex: 1;
+  font-size: 14px;
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+.todo-item.completed .todo-content {
+  text-decoration: line-through;
+  color: var(--completed-color);
+}
+
+/* 空状态 */
+.todo-empty {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  background: var(--item-bg-color);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+.todo-empty p {
+  margin: 0 0 1rem;
+}
+
+/* 统计信息 */
+.todo-stats {
+  text-align: center;
+  padding: 8px;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 12px;
+  border-top: 1px solid var(--border-color);
+  background: var(--item-bg-color);
+  font-weight: 500;
+  -webkit-app-region: no-drag;
+}
+
+/* 错误状态 */
+.error-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.error-message {
+  background: #ffebee;
+  color: #c62828;
+  padding: 1rem;
+  border-radius: 6px;
+  font-size: 14px;
+  text-align: center;
+  border: 1px solid #ef9a9a;
+  margin-bottom: 1rem;
+}
+
+/* 加载状态 */
+.todo-loading {
+  text-align: center;
+  padding: 2rem;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 14px;
+  background: var(--item-bg-color);
+  border-radius: 6px;
+  border: 1px solid var(--border-color);
+}
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 2px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* 状态显示 */
+.todo-loading,
+.todo-error {
+  text-align: center;
+  padding: 1rem;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 0.875rem;
+}
+
+.todo-error {
+  color: rgba(244, 67, 54, 0.9);
+}
+
+/* 任务组样式 */
+.todo-group {
+  margin-bottom: 1.5rem;
+}
+
+.todo-group:last-child {
+  margin-bottom: 0;
+}
+
+/* 日期分隔线 */
+.date-divider {
+  display: flex;
+  align-items: center;
+  margin: 0.5rem 0;
+  position: relative;
+}
+
+.date-divider::before {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--border-color);
+}
+
+.date-label {
+  padding: 0 10px;
+  font-size: 12px;
+  color: var(--completed-color);
+  background: var(--bg-color);
+  position: relative;
+  z-index: 1;
+  font-weight: 500;
+}
+
+/* 今天和昨天的标签样式不同 */
+.date-label:contains('今天') {
+  color: var(--primary-color);
+}
+
+.date-label:contains('昨天') {
+  color: var(--primary-color);
+  opacity: 0.7;
+}
+
+/* 已完成任务组 */
+.todo-group .todo-item {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+} 
